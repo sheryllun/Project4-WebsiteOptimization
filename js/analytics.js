@@ -1,4 +1,1 @@
-(function(w,g){w['GoogleAnalyticsObject']=g;
-  w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)};w[g].l=1*new Date();})(window,'ga');
-  ga('create', 'UA-XXXX-Y');
-  ga('send', 'pageview');
+(function(e,t){e["GoogleAnalyticsObject"]=t;e[t]=e[t]||function(){(e[t].q=e[t].q||[]).push(arguments)};e[t].l=1*new Date})(window,"ga");ga("create","UA-XXXX-Y");ga("send","pageview")
