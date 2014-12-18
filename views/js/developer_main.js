@@ -443,7 +443,6 @@ var resizePizzas = function(size) {
 
     var newsize = sizeSwitcher(size);
     var dx = (newsize - oldsize) * windowwidth;
-
     return dx;
   }
 
@@ -451,9 +450,8 @@ var resizePizzas = function(size) {
    function changePizzaSizes(size) {
     var cachedOffsetWidth = document.querySelector(".randomPizzaContainer").offsetWidth;
     var dx = determineDx(document.querySelector(".randomPizzaContainer"), size);
-
+    var newwidth = (cachedOffsetWidth + dx) + 'px';
     for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
-      var newwidth = (cachedOffsetWidth + dx) + 'px';
       document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
     }
   }
@@ -506,11 +504,12 @@ function updatePositions() {
 
   var cachedScrollTop = document.body.scrollTop;
   var items = document.querySelectorAll('.mover');
-  for (var i = 0; i < items.length; i++) {
+  var len = items.length;
+  for (var i = 0; i < len; i++) {
     var phase = Math.sin((cachedScrollTop / 1250) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+    var leftPos = items[i].basicLeft + 100 * phase + 'px'
+    items[i].style.left = leftPos;
   }
-
   // User Timing API to the rescue again. Seriously, it's worth learning.
   // Super easy to create custom metrics.
   window.performance.mark("mark_end_frame");
@@ -520,7 +519,6 @@ function updatePositions() {
     logAverageFrame(timesToUpdatePosition);
   }
 }
-
 // runs updatePositions on scroll
 window.addEventListener('scroll', updatePositions);
 
@@ -528,14 +526,18 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+  for (var i = 0; i < 22; i++) {
     var elem = document.createElement('img');
+    var topPos = (Math.floor(i / cols) * s) + 'px';
+    var leftPos = (i % cols) * s;
     elem.className = 'mover';
-    elem.src = "images/pizza.png";
+    elem.src = "images/pizzabg.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
-    elem.basicLeft = (i % cols) * s;
-    elem.style.top = (Math.floor(i / cols) * s) + 'px';
+    //elem.style.webkitTransform = "translateX(" + leftPos + ")";
+    elem.basicLeft = leftPos;
+   // elem.style.top = (Math.floor(i / cols) * s) + 'px';
+    elem.style.webkitTransform = "translateY(" + topPos + ")";
     document.querySelector("#movingPizzas1").appendChild(elem);
   }
   updatePositions();
